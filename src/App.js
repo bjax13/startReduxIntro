@@ -1,8 +1,23 @@
 import React, { Component } from 'react';
+import Login from './Login';
 import logo from './logo.svg';
+import store from './redux/store';
+import {connect} from 'react-redux';
 import './App.css';
+import {loginUser} from './redux/users';
 
 class App extends Component {
+  constructor(props) {
+    super(props)
+
+    this.loginUser = this.loginUser.bind(this);
+  }
+
+  loginUser(user) {
+    store.dispatch(loginUser(this.state.newUser));
+  }
+
+
   render() {
     return (
       <div className="App">
@@ -10,12 +25,17 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h2>Welcome to React</h2>
         </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <h1>Logged in with {this.props.user}</h1>
+        <Login />
       </div>
     );
   }
 }
 
-export default App;
+function mapStateToProps(state) {
+  return {
+    user: state.user
+  }
+}
+
+export default connect(mapStateToProps)(App);

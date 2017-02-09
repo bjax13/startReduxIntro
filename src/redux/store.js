@@ -1,3 +1,5 @@
 import {createStore} from 'redux';
 
-export default createStore();
+import users from './users';
+
+export default createStore(users);
